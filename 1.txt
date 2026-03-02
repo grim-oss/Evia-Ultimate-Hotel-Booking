@@ -1,0 +1,151 @@
+EVIA-ULTIMATE-HOTEL-BOOKING/
+│
+├── 📁 .github/                                   # (Placeholder for future CI/CD)
+│   └── 📁 workflows/
+│       ├── 📄 ci-cd.yml
+│       └── 📄 security-scan.yml
+│
+├── 📁 apps/                                       # Frontend applications
+            /admin-dashboard/
+            ├── index.html
+            ├── package.json
+            ├── tsconfig.json
+            ├── vite.config.ts
+            ├── tailwind.config.js
+            ├── postcss.config.js
+            ├── .env.example
+            └── src/
+                ├── main.tsx
+                ├── App.tsx
+                ├── styles/
+                │   └── globals.css          # Imports the main global CSS (shared with customer)
+                ├── api/
+                │   └── client.ts             # Axios instance for API calls
+                ├── components/
+                │   ├── layout/
+                │   │   ├── Sidebar.tsx       # Admin sidebar navigation
+                │   │   └── Header.tsx        # Top header with user menu
+                │   ├── HotelForm.tsx
+                │   ├── RoomForm.tsx
+                │   └── DataTable.tsx          # Reusable table with sorting/pagination
+                └── pages/
+                    ├── Dashboard.tsx
+                    ├── Hotels.tsx
+                    ├── Rooms.tsx
+                    ├── Bookings.tsx
+                    ├── Payments.tsx
+                    └── Users.tsx
+│   └── 📁 customer-web/                           # Next.js 14 customer app (Amharic/English)
+│       ├── 📁 public/
+│       │   └── 📁 locales/                         # i18n translation files
+│       │       ├── 📁 am/
+│       │       │   └── 📄 common.json               # Amharic translations
+│       │       └── 📁 en/
+│       │           └── 📄 common.json               # English translations
+│       ├── 📁 src/
+│       │   ├── 📁 components/
+│       │   │   ├── 📁 layout/
+│       │   │   │   └── 📄 Header.tsx                 # Language switcher + nav
+│       │   │   ├── 📁 booking/
+│       │   │   │   └── 📄 BookingForm.tsx            # Calls POST /api/bookings
+│       │   │   └── 📁 payment/
+│       │   │       ├── 📄 PaymentSelector.tsx        # Renders 3 payment buttons
+│       │   │       ├── 📄 TelebirrPayment.tsx        # (placeholder)
+│       │   │       ├── 📄 CBEBirrPayment.tsx         # (placeholder)
+│       │   │       └── 📄 ChapaPayment.tsx           # (placeholder)
+│       │   ├── 📁 pages/
+│       │   │   ├── 📄 _app.tsx                        # i18n wrapper
+│       │   │   ├── 📄 index.tsx                       # Homepage with BookingForm
+│       │   │   ├── 📄 booking.tsx                     # Booking page (uses PaymentSelector)
+│       │   │   └── 📄 payment.tsx                     # Payment page placeholder
+│       │   ├── 📁 i18n/
+│       │   │   └── 📄 index.ts                         # i18n config (empty)
+│       │   └── 📁 styles/
+│       │       └── 📄 globals.css
+│       ├── 📄 next.config.js
+│       ├── 📄 next-i18next.config.js
+│       ├── 📄 package.json
+│       └── 📄 tsconfig.json
+│
+├── 📁 backend/                                      # Main backend (Express + TypeScript)
+│   ├── 📁 src/
+│   │   ├── 📄 server.ts                              # Main entry point (🟢 starts here)
+│   │   ├── 📁 controllers/
+│   │   │   ├── 📄 auth.controller.ts                 # Auth endpoints (dummy)
+│   │   │   ├── 📄 booking.controller.ts               # POST /api/bookings → calls BookingService
+│   │   │   └── 📄 payment.controller.ts               # POST /api/payments/initiate → calls PaymentService
+│   │   ├── 📁 services/
+│   │   │   ├── 📄 booking.service.ts                  # Orchestrates hold → payment → notification 🟡
+│   │   │   ├── 📄 payment.service.ts                  # Factory: picks adapter based on method
+│   │   │   ├── 📄 notification.service.ts             # Uses SMS adapter
+│   │   │   └── 📄 auth.service.ts                     # (placeholder)
+│   │   ├── 📁 repositories/
+│   │   │   ├── 📄 booking.repository.ts               # Mock create()
+│   │   │   ├── 📄 user.repository.ts                  # (placeholder)
+│   │   │   ├── 📄 hotel.repository.ts                 # (placeholder)
+│   │   │   ├── 📄 payment.repository.ts               # (placeholder)
+│   │   │   └── 📄 transaction.repository.ts           # (placeholder)
+│   │   ├── 📁 adapters/
+│   │   │   ├── 📁 payment/
+│   │   │   │   ├── 📄 IPaymentProvider.ts              # Interface
+│   │   │   │   ├── 📁 telebirr/
+│   │   │   │   │   └── 📄 TelebirrAdapter.ts           # Mock implementation
+│   │   │   │   ├── 📁 cbe-birr/
+│   │   │   │   │   └── 📄 CbeBirrAdapter.ts            # Mock implementation
+│   │   │   │   └── 📁 chapa/
+│   │   │   │       └── 📄 ChapaAdapter.ts              # Mock implementation
+│   │   │   └── 📁 messaging/
+│   │   │       └── 📄 EthioTelecomSMSAdapter.ts        # Mock SMS sender
+│   │   ├── 📁 holding-system/
+│   │   │   └── 📄 reservation-holder.ts                # Redis-based hold (15 min) 🟡
+│   │   ├── 📁 middleware/
+│   │   │   ├── 📄 auth.middleware.ts                   # (placeholder)
+│   │   │   └── 📄 rate-limiter.ts                      # (placeholder)
+│   │   ├── 📁 utils/
+│   │   │   └── 📄 phone-validator.ts                   # +251 validator
+│   │   └── 📁 infrastructure/
+│   │       ├── 📄 database.ts                           # PostgreSQL connection
+│   │       └── 📄 redis.ts                              # Redis client
+├── 📁 tests/                                           # Test suite (placeholders)
+│   ├── 📁 unit/
+│       │   ├── services/
+│       │   │   ├── auth.service.test.ts
+│       │   │   ├── booking.service.test.ts
+│       │   │   ├── payment.service.test.ts
+│       │   │   └── notification.service.test.ts
+│       │   ├── repositories/
+│       │   │   ├── user.repository.test.ts
+│       │   │   └── booking.repository.test.ts
+│       │   ├── adapters/
+│       │   │   ├── telebirr.adapter.test.ts
+│       │   │   └── sms.adapter.test.ts
+│       │   └── utils/
+│       │       └── phone-validator.test.ts
+│   └── 📁 integration/
+│           ├── auth.routes.test.ts
+│           ├── booking.routes.test.ts
+│           └── payment.routes.test.ts
+│   ├── 📄 package.json
+│   └── 📄 tsconfig.json
+│
+├── 📁 extensions/                                     # 🟢 Future advanced modules (placeholders)
+│   ├── 📁 ai-agents/                                   # Will integrate with booking.service.ts
+│   ├── 📁 blockchain/                                  # Will integrate with payment.service.ts
+│   └── 📁 freelance-system/                            # Will connect via separate pages
+│
+├── 📁 docs/                                            # Documentation
+│   └── 📄 README.md
+│
+├── 📁 scripts/                                         # Utility scripts
+│   └── 📄 deploy-ethiopia.sh                           # (placeholder)
+│
+├── 📁 tests/                                           # Test suite (placeholders)
+│   ├── 📁 unit/
+
+│   └── 📁 integration/
+│
+├── 📄 docker-compose.yml                                # PostgreSQL + Redis
+├── 📄 .env.example                                      # Environment variables template
+├── 📄 .env                                              # Your actual env (not in repo)
+├── 📄 .gitignore
+└── 📄 README.md                                         # Project overview

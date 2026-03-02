@@ -1,0 +1,6 @@
+@import '../../../../apps/customer-web/src/styles/globals.css';
+
+/* Admin specific overrides can be added here if needed */
+.admin-theme {
+  /* Already defined in the global CSS */
+}

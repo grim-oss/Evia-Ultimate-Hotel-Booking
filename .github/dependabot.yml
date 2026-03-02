@@ -1,0 +1,52 @@
+# Dependabot configuration for Evia Ultimate Hotel Booking
+version: 2
+updates:
+  # Backend (Node.js) dependencies
+  - package-ecosystem: "npm"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Africa/Addis_Ababa"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "backend"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    ignore:
+      - dependency-name: "@types/node"
+        versions: [">=21.x"] # Keep compatible with current Node version
+
+  # Frontend (Next.js) dependencies
+  - package-ecosystem: "npm"
+    directory: "/apps/customer-web"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Africa/Addis_Ababa"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "frontend"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    ignore:
+      - dependency-name: "@types/node"
+        versions: [">=21.x"]
+
+  # Docker images (for backend services)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Africa/Addis_Ababa"
+    labels:
+      - "dependencies"
+      - "docker"
